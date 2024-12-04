@@ -1,0 +1,275 @@
+openapi: 3.0.3
+info:
+  title: Library
+  description: Library Manager
+  version: 1.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/HEITITAN2/TD3/1.0.0
+  -  url: https://localhost.std23089.com
+tags:
+  - name: book
+    description: everything about the books
+  - name: author
+    description: everything about authors
+paths:
+  /books:
+    put:
+      tags:
+        - book
+      summary: Update an existing book
+      description: Update an existing book by Id
+      operationId: updateBook
+      parameters:
+        - name: bookID
+          in: query
+          description: ID of the book
+          required: false
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent book in the library
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Book not found
+    post:
+      tags:
+        - book
+      summary: Add a new book to the library
+      description: Add a new book to the library
+      operationId: addBook
+      requestBody:
+        description: Create a new book
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book' 
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'          
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - book
+      summary: Finds a book in the library
+      description: Finds a book in the library
+      operationId: findBook
+      parameters:
+        - name: bookID
+          in: query
+          description: ID of the book
+          required: false
+          schema:
+            type: string
+        - name: bookName
+          in: query
+          description: Name of the book
+          required: false
+          schema:
+            type: string
+        - name: releaseDate
+          in: query
+          description: Release date of the book
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'          
+        '404':
+          description: Book not found
+ 
+    delete:
+      tags:
+        - book
+      summary: Deletes a book
+      description: delete a book
+      operationId: deleteBook
+      parameters:
+        - name: bookID
+          in: query
+          description: ID of the book
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book' 
+  /authors:
+    put:
+      tags:
+        - author
+      summary: Update an existing author
+      description: Update an existing author by Id
+      operationId: updateAuthor
+      parameters:
+        - name: authorID
+          in: query
+          description: ID of the auhtor
+          required: false
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent author
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'          
+        '404':
+          description: Author not found
+    post:
+      tags:
+        - author
+      summary: Add a new author
+      description: Add a new auhtor
+      operationId: addAuthor
+      requestBody:
+        description: Create a new author
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author' 
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'          
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - author
+      summary: Finds an auhtor
+      description: Finds an author
+      operationId: findAuthor
+      parameters:
+        - name: authorID
+          in: query
+          description: ID of the author
+          required: false
+          schema:
+            type: string
+        - name: authorName
+          in: query
+          description: Name of the author
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'          
+        '404':
+          description: Author not found
+ 
+    delete:
+      tags:
+        - author
+      summary: Deletes an author
+      description: delete an author
+      operationId: deleteAuthor
+      parameters:
+        - name: authorID
+          in: query
+          description: ID of the author
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author' 
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'B240ZH'
+        bookName:
+          type: string
+          example: 'Tom and Jerry'
+        pageNumbers:
+          type: integer
+          format: int32
+          example: 7
+        topic:
+          type: string
+          enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
+          example: 'OTHER'
+        releaseDate:
+          type: string
+          format: date-time
+        author:
+            $ref: '#/components/schemas/Author'
+          
+
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'B240ZH'
+        name:
+          type: string
+          example: 'Jackson'
+        sex:
+          type: string
+          enum:
+            - M
+            - F
+          example: 'M'
