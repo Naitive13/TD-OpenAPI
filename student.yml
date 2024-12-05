@@ -1,0 +1,255 @@
+openapi: 3.0.3
+info:
+  title: Student
+  description: Student Manager
+  version: 1.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/HEITITAN2/TD3/1.0.0
+  - url: https://localhost.std23089.com
+tags:
+  - name: group
+    description: everything about student's groups
+  - name: student
+    description: everything about students
+paths:
+  /group:
+    put:
+      tags:
+        - group
+      summary: Update an existing group
+      description: Update an existing group
+      operationId: updateGroup
+      parameters:
+        - name: groupName
+          in: query
+          description: name of the group
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent group
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Group"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "404":
+          description: Book not found
+    post:
+      tags:
+        - group
+      summary: Add a new group
+      description: Add a new group
+      operationId: addGroup
+      requestBody:
+        description: Create a new group
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Group"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "400":
+          description: Invalid input
+    get:
+      tags:
+        - group
+      summary: Finds a group
+      description: Finds a group
+      operationId: findGroup
+      parameters:
+        - name: groupName
+          in: query
+          description: name of the group
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Group"
+        "404":
+          description: group not found
+
+    delete:
+      tags:
+        - group
+      summary: Deletes a group
+      description: delete a group
+      operationId: deleteGroup
+      parameters:
+        - name: groupName
+          in: query
+          description: name of the group
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+  /students:
+    put:
+      tags:
+        - student
+      summary: Update an existing student
+      description: Update an existing student by Id
+      operationId: updateStudent
+      parameters:
+        - name: studentID
+          in: query
+          description: ID of the student
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent student
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        "404":
+          description: student not found
+    post:
+      tags:
+        - student
+      summary: Add a new student
+      description: Add a new student
+      operationId: addStudent
+      requestBody:
+        description: Create a new student
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+    get:
+      tags:
+        - student
+      summary: Finds a student
+      description: Finds a student
+      operationId: findStudent
+      parameters:
+        - name: studentID
+          in: query
+          description: ID of the student
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Student"
+        "404":
+          description: Student not found
+
+    delete:
+      tags:
+        - student
+      summary: Deletes a student
+      description: delete a student
+      operationId: deleteStudent
+      parameters:
+        - name: studentID
+          in: query
+          description: ID of the student
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+components:
+  schemas:
+    Group:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "J2"
+        year:
+          type: integer
+          format: int32
+          example: 2024
+        promotion:
+          type: string
+          enum:
+            - G
+            - H
+            - J
+            - K
+          example: "J"
+        numberOfStudent:
+          type: integer
+          format: int32
+          example: 42
+        students:
+          type: array
+          items:
+            $ref: "#/components/schemas/Student"
+
+    Student:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "STDXXX"
+        name:
+          type: string
+          example: "Jackson"
+        sex:
+          type: string
+          enum:
+            - M
+            - F
+          example: "M"
+        birhdate:
+          type: string
+          format: date-time
