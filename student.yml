@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Student
-  description: Student Manager
+  title: Student Course
+  description: Student course manager
   version: 1.0.0
 servers:
   # Added by API Auto Mocking Plugin
@@ -14,7 +14,7 @@ tags:
   - name: student
     description: everything about students
 paths:
-  /group:
+  /groups:
     put:
       tags:
         - group
@@ -79,6 +79,13 @@ paths:
           required: false
           schema:
             type: string
+        - name: groupYear
+          in: query
+          description: year of the group
+          required: true
+          schema:
+            type: string
+            format: date-time
       responses:
         "200":
           description: successful operation
@@ -125,6 +132,7 @@ paths:
           required: true
           schema:
             type: string
+
       requestBody:
         description: Update an existent student
         content:
@@ -168,6 +176,12 @@ paths:
       description: Finds a student
       operationId: findStudent
       parameters:
+        - name: studentName
+          in: query
+          description: name of the student
+          required: true
+          schema:
+            type: string
         - name: studentID
           in: query
           description: ID of the student
@@ -211,7 +225,10 @@ components:
     Group:
       type: object
       properties:
-        name:
+        id:
+          type: string
+          example: "GRP001"
+        groupName:
           type: string
           example: "J2"
         year:
@@ -238,9 +255,6 @@ components:
     Student:
       type: object
       properties:
-        id:
-          type: string
-          example: "STDXXX"
         name:
           type: string
           example: "Jackson"
@@ -253,3 +267,12 @@ components:
         birhdate:
           type: string
           format: date-time
+        reference:
+          type: string
+          example: "STD23XXX"
+        id:
+          type: string
+          example: "b32544fh2a"
+        group:
+          type: string
+          example: "J2"
