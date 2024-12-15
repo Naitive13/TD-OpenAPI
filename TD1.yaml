@@ -2,12 +2,12 @@ openapi: 3.0.3
 info:
   title: Library
   description: Library Manager
-  version: 1.0.0
+  version: 1.1.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/HEITITAN2/TD3/1.0.0
-  -  url: https://localhost.std23089.com
+    url: https://virtserver.swaggerhub.com/HEITITAN2/std23089-td1-prog3/1.1.0
+  - url: https://localhost.std23089.com
 tags:
   - name: book
     description: everything about the books
@@ -33,18 +33,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref: "#/components/schemas/Book"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'          
-        '400':
+                $ref: "#/components/schemas/Book"
+        "400":
           description: Invalid ID supplied
-        '404':
+        "404":
           description: Book not found
     post:
       tags:
@@ -57,16 +57,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book' 
+              $ref: "#/components/schemas/Book"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'          
-        '400':
+                $ref: "#/components/schemas/Book"
+        "400":
           description: Invalid input
     get:
       tags:
@@ -94,18 +94,32 @@ paths:
           schema:
             type: string
             format: date-time
+        - name: page
+          in: query
+          description: Release date of the book
+          required: false
+          schema:
+            type: integer
+            default: 1        
+        - name: pageSize
+          in: query
+          description: Release date of the book
+          required: false
+          schema:
+            type: integer
+            default: 50
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Book'          
-        '404':
+                  $ref: "#/components/schemas/Book"
+        "404":
           description: Book not found
- 
+
     delete:
       tags:
         - book
@@ -120,12 +134,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book' 
+                $ref: "#/components/schemas/Book"
   /authors:
     put:
       tags:
@@ -145,16 +159,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Author'
+              $ref: "#/components/schemas/Author"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'          
-        '404':
+                $ref: "#/components/schemas/Author"
+        "404":
           description: Author not found
     post:
       tags:
@@ -167,16 +181,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Author' 
+              $ref: "#/components/schemas/Author"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'          
-        '400':
+                $ref: "#/components/schemas/Author"
+        "400":
           description: Invalid input
     get:
       tags:
@@ -198,17 +212,17 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Author'          
-        '404':
+                  $ref: "#/components/schemas/Author"
+        "404":
           description: Author not found
- 
+
     delete:
       tags:
         - author
@@ -223,23 +237,93 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author' 
+                $ref: "#/components/schemas/Author"
+  /books/{bookId}/authors/{authorId}:
+    put:
+      tags:
+        - book
+      summary: Update an existing book
+      description: Update an existing book by Id
+      operationId: updateBookWithAuthor
+      parameters:
+        - name: bookId
+          in: path
+          description: ID of the book
+          required: true
+          schema:
+            type: string
+        - name: authorId
+          in: path
+          description: ID of the book
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+  /books/authors:
+    put:
+      tags:
+        - book
+      summary: Update an existing book
+      description: Update an existing book by Id
+      operationId: updateBooksAndAuthors
+      requestBody:
+        description: Update an existent book in the library
+        content:
+          application/json:
+            schema:
+             type: array
+             items:
+              $ref: "#/components/schemas/UpdateBookAuthor"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Book not found
 components:
   schemas:
     Book:
       type: object
+      allOf:
+          - $ref: "#/components/schemas/CrupdateBook"
+      properties:
+        author:
+          $ref: "#/components/schemas/Author"
+    UpdateBookAuthor:
+      type: object
+      properties:
+        bookId:
+          type: string
+          example: 'BK377'
+        authorId:
+          type: string
+          example: 'AT3355'
+    CrupdateBook:
+      type: object
       properties:
         id:
           type: string
-          example: 'B240ZH'
+          example: "B240ZH"
         bookName:
           type: string
-          example: 'Tom and Jerry'
+          example: "Tom and Jerry"
         pageNumbers:
           type: integer
           format: int32
@@ -250,26 +334,23 @@ components:
             - ROMANCE
             - COMEDY
             - OTHER
-          example: 'OTHER'
+          example: "OTHER"
         releaseDate:
           type: string
           format: date-time
-        author:
-            $ref: '#/components/schemas/Author'
-          
 
     Author:
       type: object
       properties:
         id:
           type: string
-          example: 'B240ZH'
+          example: "B240ZH"
         name:
           type: string
-          example: 'Jackson'
+          example: "Jackson"
         sex:
           type: string
           enum:
             - M
             - F
-          example: 'M'
+          example: "M"
