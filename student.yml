@@ -341,7 +341,7 @@ components:
             id:
               type: string
               example: 'GRP001'
-    CreateStudent:
+    BaseStudent:
       type: object
       properties:
         name:
@@ -359,9 +359,13 @@ components:
         reference:
           type: string
           example: 'STD23XXX'
-        group:
-          allOf:
-            - $ref: '#/components/schemas/Group'
+    CreateStudent:
+      allOf:
+        - $ref: "$/components/schema/BaseStudent"
+        - properties:
+            studentGroup:
+              allOf:
+                - $ref: '#/components/schemas/Group'
     Student:
       allOf:
         - $ref: '#/components/schemas/CreateStudent'
