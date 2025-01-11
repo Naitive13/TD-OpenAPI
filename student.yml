@@ -1,4 +1,3 @@
-openapi: 3.0.3
 info:
   title: Student Course
   description: Student course manager
@@ -7,7 +6,7 @@ servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/HEITITAN2/TD3/1.0.1
-  -  url: https://localhost.std23089.com
+  - url: https://localhost.std23089.com
 tags:
   - name: group
     description: everything about student's groups
@@ -33,16 +32,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Group'
+              $ref: "#/components/schemas/Group"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Group'          
-        '404':
+                $ref: "#/components/schemas/Group"
+        "404":
           description: Book not found
     post:
       tags:
@@ -55,16 +54,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateGroup' 
+              $ref: "#/components/schemas/CreateGroup"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Group'          
-        '400':
+                $ref: "#/components/schemas/Group"
+        "400":
           description: Invalid input
     get:
       tags:
@@ -87,17 +86,17 @@ paths:
             type: string
             format: date-time
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Group'          
-        '404':
+                  $ref: "#/components/schemas/Group"
+        "404":
           description: group not found
- 
+
     delete:
       tags:
         - group
@@ -112,12 +111,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Group' 
+                $ref: "#/components/schemas/Group"
   /students:
     put:
       tags:
@@ -131,23 +130,23 @@ paths:
           description: ID of the student
           required: true
           schema:
-            type: string        
+            type: string
 
       requestBody:
         description: Update an existent student
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Student'
+              $ref: "#/components/schemas/Student"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student'          
-        '404':
+                $ref: "#/components/schemas/Student"
+        "404":
           description: student not found
     post:
       tags:
@@ -160,22 +159,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateStudent' 
+              $ref: "#/components/schemas/CreateStudent"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student'          
+                $ref: "#/components/schemas/Student"
     get:
       tags:
         - student
       summary: Finds a student
       description: Finds a student
       operationId: findStudent
-      parameters:        
+      parameters:
         - name: studentName
           in: query
           description: name of the student
@@ -189,17 +188,17 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Student'          
-        '404':
+                  $ref: "#/components/schemas/Student"
+        "404":
           description: Student not found
- 
+
     delete:
       tags:
         - student
@@ -214,12 +213,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student' 
+                $ref: "#/components/schemas/Student"
   /students/{studentId}/group:
     put:
       tags:
@@ -239,15 +238,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Group' 
+              $ref: "#/components/schemas/CreateGroup"
         required: true
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student'
+                $ref: "#/components/schemas/Student"
   /students/group:
     put:
       tags:
@@ -261,23 +260,23 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/Group' 
+                - $ref: "#/components/schemas/Group"
                 - type: object
                   properties:
                     studentIDs:
                       type: array
-                      items: 
+                      items:
                         type: string
         required: true
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Student'
+                  $ref: "#/components/schemas/Student"
   /students/{studentId}/group/{groupId}:
     put:
       tags:
@@ -291,7 +290,7 @@ paths:
           description: ID of a student
           required: true
           schema:
-            type: string        
+            type: string
         - name: groupId
           in: path
           description: ID of a group
@@ -299,12 +298,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Student'
+                $ref: "#/components/schemas/Student"
 components:
   schemas:
     CreateGroup:
@@ -312,7 +311,7 @@ components:
       properties:
         groupName:
           type: string
-          example: 'J2'
+          example: "J2"
         year:
           type: integer
           format: int32
@@ -324,7 +323,7 @@ components:
             - H
             - J
             - K
-          example: 'J'
+          example: "J"
         numberOfStudent:
           type: integer
           format: int32
@@ -332,45 +331,45 @@ components:
         students:
           type: array
           items:
-            $ref: '#/components/schemas/Student'
+            $ref: "#/components/schemas/Student"
     Group:
       allOf:
-        - $ref: '#/components/schemas/CreateGroup'
+        - $ref: "#/components/schemas/CreateGroup"
         - type: object
           properties:
             id:
               type: string
-              example: 'GRP001'
+              example: "GRP001"
     BaseStudent:
       type: object
       properties:
         name:
           type: string
-          example: 'Jackson'
+          example: "Jackson"
         sex:
           type: string
           enum:
             - M
             - F
-          example: 'M'
+          example: "M"
         birhdate:
           type: string
           format: date-time
         reference:
           type: string
-          example: 'STD23XXX'
+          example: "STD23XXX"
     CreateStudent:
       allOf:
         - $ref: "$/components/schema/BaseStudent"
         - properties:
             studentGroup:
               allOf:
-                - $ref: '#/components/schemas/Group'
+                - $ref: "#/components/schemas/Group"
     Student:
       allOf:
-        - $ref: '#/components/schemas/CreateStudent'
+        - $ref: "#/components/schemas/CreateStudent"
         - type: object
           properties:
             id:
               type: string
-              example: 'b32544fh2a'
+              example: "b32544fh2a"
